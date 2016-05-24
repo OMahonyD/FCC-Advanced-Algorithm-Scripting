@@ -9,21 +9,35 @@ Remember to use Read-Search-Ask if you get stuck. Try to pair program. Write you
 Here are some helpful links:
 Global Object
 **********************************************************/
-function checkCashRegister(price, cash, cid) {
+
+  function checkCashRegister(price, cash, cid) {
   //Turn price and cash into pennies
   price *= 100;  cash *= 100;
-  //Simple math to find change
+
+  //Find change owed
   var change = cash - price;
   
   //Iterate through cid array
   for(var i in cid) {
     //Turn the values into pennies (Math.ceil used as one array returning floating point number)
     cid[i][1] = Math.ceil(cid[i][1] *= 100);
+  }//
+  console.log("The change owed is " + change + " pennies");
+  console.log("The cash in drawer is " + cid);
+
+  
+  
   }
   
+  //if changeOwed > totalCash
+    //return the string "Insufficient Funds"
   
-  return cid;
-}
+  //else if changeOwed === totalCash
+    //return the string "Closed"
+  
+  //else return an array of change denominations from highest to lowest
+  
+
 
 // Example cash-in-drawer array:
 // [["PENNY", 1.01],
