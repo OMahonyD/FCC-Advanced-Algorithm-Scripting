@@ -23,11 +23,11 @@ Global Object
     cid[i][1] = Math.ceil(cid[i][1] *= 100);
   }//
   console.log("The change owed is " + change + " pennies");
-  console.log("The cash in drawer is " + cid);
+  console.log("The value of each denomination in pennies in drawer is " + cid);
 
   
   
-  }
+  }//end checkCashRegister
   
   //if changeOwed > totalCash
     //return the string "Insufficient Funds"
