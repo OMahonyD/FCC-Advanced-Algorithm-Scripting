@@ -12,6 +12,7 @@ Global Object
 
   
   function checkCashRegister(price, cash, cid) {
+    
   //Declare and initialise
   var totalCash = 0;  
   var vals = [1, 5, 10, 25, 100, 500, 1000, 2000, 10000];//Values of each denomination in pennies;   
@@ -20,18 +21,21 @@ Global Object
 
   //Find change owed
   var changeOwed = cash - price;
+  console.log("The change owed is " + changeOwed + " pennies");
   
   //Iterate through cid array
   for(var i in cid) {
     //Turn the values into pennies (Math.ceil used as one array returning floating point number)
     cid[i][1] = Math.ceil(cid[i][1] *= 100);
   }//
-  
+  console.log("The value of each denomination in drawer is " + cid);
+    
   //Find totalCash
   for(var j in cid) {
     totalCash += cid[j][1];
   }
-
+  console.log("Total Cash is: " + totalCash + " pennies");
+    
   //if changeOwed > totalCash
   if(changeOwed > totalCash) {
     //return the string "Insufficient Funds"
@@ -43,18 +47,10 @@ Global Object
   }else {
      //else return an array of change denominations from highest to lowest
       //RECURSIVE FUNCTION NEEDED HERE TO DO SOMETHING THAT IF BOTH CASES ABOVE ARE FALSE THEN CONTINUES TO RUN???
-    return cid;
+     return cid;
   }//end if/else  
- 
-      
-    
-    
-    
-    
-    
-  console.log("Total Cash is: " + totalCash);  
-  console.log("The change owed is " + changeOwed + " pennies");
-  console.log("The value of each denomination in pennies in drawer is " + cid);
+
+  
   }//end checkCashRegister
 
 // Example cash-in-drawer array:
