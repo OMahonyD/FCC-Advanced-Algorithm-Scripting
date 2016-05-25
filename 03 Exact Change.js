@@ -42,6 +42,9 @@ Global Object
     return "Closed";
   }else {
      //else return an array of change denominations from highest to lowest
+      //RECURSIVE FUNCTION NEEDED HERE TO DO SOMETHING THAT IF BOTH CASES ABOVE ARE FALSE THEN CONTINUES TO RUN???
+    return cid;
+  }//end if/else  
   }//end if/else  
       
     
