@@ -14,7 +14,7 @@ Global Object
   function checkCashRegister(price, cash, cid) {
   //Declare and initialise
   var totalCash = 0;  
-    
+  var vals = [1, 5, 10, 25, 100, 500, 1000, 2000, 10000];//Values of each denomination in pennies;   
   //Turn price and cash into pennies
   price *= 100;  cash *= 100;
 
@@ -45,7 +45,7 @@ Global Object
       //RECURSIVE FUNCTION NEEDED HERE TO DO SOMETHING THAT IF BOTH CASES ABOVE ARE FALSE THEN CONTINUES TO RUN???
     return cid;
   }//end if/else  
-  }//end if/else  
+ 
       
     
     
