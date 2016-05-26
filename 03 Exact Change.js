@@ -24,11 +24,9 @@ function checkCashRegister(price, cash, cid) {
       total = total + (cid[i][1] * 100); //Add the value of each coin or bill (in cents) to the total
     }
     return total;
-  }
-  
+  }//end for
   return change;
-}
-
+}//end getTotalCid
 // Example cash-in-drawer array:
 // [["PENNY", 1.01],
 // ["NICKEL", 2.05],
