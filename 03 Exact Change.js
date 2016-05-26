@@ -10,48 +10,24 @@ Here are some helpful links:
 Global Object
 **********************************************************/
 
+function checkCashRegister(price, cash, cid) {
+  cash = cash * 100;          //Multiply cash and price by 100 to get the cents
+  price = price * 100;
   
-  function checkCashRegister(price, cash, cid) {
-    
-  //Declare and initialise
-  var totalCash = 0;  
-  var vals = [1, 5, 10, 25, 100, 500, 1000, 2000, 10000];//Values of each denomination in pennies;   
-  //Turn price and cash into pennies
-  price *= 100;  cash *= 100;
-
-  //Find change owed
-  var changeOwed = cash - price;
-  console.log("The change owed is " + changeOwed + " pennies");
+  var change = cash - price; //Total change to be returned
+  var totalCid = getTotalCid(cid);
   
-  //Iterate through cid array
-  for(var i in cid) {
-    //Turn the values into pennies (Math.ceil used as one array returning floating point number)
-    cid[i][1] = Math.ceil(cid[i][1] *= 100);
-  }//
-  console.log("The value of each denomination in drawer is " + cid);
-    
-  //Find totalCash
-  for(var j in cid) {
-    totalCash += cid[j][1];
+  
+  function getTotalCid(cid) {
+    var total = 0;
+    for(var i = 0; i < cid.length; i++) {
+      total = total + (cid[i][1] * 100); //Add the value of each coin or bill (in cents) to the total
+    }
+    return total;
   }
-  console.log("Total Cash is: " + totalCash + " pennies");
-    
-  //if changeOwed > totalCash
-  if(changeOwed > totalCash) {
-    //return the string "Insufficient Funds"
-    return "Insufficient Funds";
-   //else if changeOwed === totalCash
-  }else if(changeOwed === totalCash) {
-    //return the string "Closed"
-    return "Closed";
-  }else {
-     //else return an array of change denominations from highest to lowest
-      //RECURSIVE FUNCTION NEEDED HERE TO DO SOMETHING THAT IF BOTH CASES ABOVE ARE FALSE THEN CONTINUES TO RUN???
-     return cid;
-  }//end if/else  
-
   
-  }//end checkCashRegister
+  return change;
+}
 
 // Example cash-in-drawer array:
 // [["PENNY", 1.01],
