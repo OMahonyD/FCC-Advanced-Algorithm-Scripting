@@ -10,58 +10,89 @@ Here are some helpful links:
 Global Object
 **********************************************************/
 
+function drawer(price, cash, cid) {
+var change = [['PENNY', 0.00], ['NICKEL', 0.00], ['DIME', 0.00], ['QUARTER', 0.00], ['ONE', 0.00], ['FIVE', 0.00], ['TEN', 0.00], ['TWENTY', 0.00], ['ONE HUNDRED', 0.00]];
   
-  function checkCashRegister(price, cash, cid) {
-    
-  //Declare and initialise
-  var totalCash = 0;  
-  var vals = [1, 5, 10, 25, 100, 500, 1000, 2000, 10000];//Values of each denomination in pennies;   
-  //Turn price and cash into pennies
-  price *= 100;  cash *= 100;
-
-  //Find change owed
-  var changeOwed = cash - price;
-  console.log("The change owed is " + changeOwed + " pennies");
+  var changeVal = cash - price;
+        console.log(changeVal);
+  var cidVal = 0;
+  for(var i = 0; i < cid.length; i++)
+    {      
+      cidVal += cid[i][1];      
+    }
   
-  //Iterate through cid array
-  for(var i in cid) {
-    //Turn the values into pennies (Math.ceil used as one array returning floating point number)
-    cid[i][1] = Math.ceil(cid[i][1] *= 100);
-  }//
-  console.log("The value of each denomination in drawer is " + cid);
-    
-  //Find totalCash
-  for(var j in cid) {
-    totalCash += cid[j][1];
+  if(cidVal < changeVal) { return "Insufficient Funds"; } else if(cidVal === changeVal) { return "Closed"; } else { while(changeVal > 0.00)
+        {  
+         
+          if((changeVal >= 100.00) && (cid[8][1] >= 100.00))
+            {
+              changeVal -= 100.00;
+              cid[8][1] -= 100.00;
+              change[8][1] += 100.00;
+            }
+          else if((changeVal >= 20.00) && (cid[7][1] >= 20.00))
+            {
+              changeVal -= 20.00;
+              cid[7][1] -= 20.00;
+              change[7][1] += 20.00;
+            } 
+          else if((changeVal >= 10.00) && (cid[6][1] >= 10.00))
+            {
+              changeVal -= 10.00;
+              cid[6][1] -= 10.00;
+              change[6][1] += 10.00;
+            } 
+          else if((changeVal >= 5.00) && (cid[5][1] >= 5.00))
+            {
+              changeVal -= 5.00;
+              cid[5][1] -= 5.00;
+              change[5][1] += 5.00;
+            } 
+          else if((changeVal >= 1.00) && (cid[4][1] >= 1.00))
+            {
+              changeVal -= 1.00;
+              cid[4][1] -= 1.00;
+              change[4][1] += 1.00;
+            }
+          else if((changeVal >= 0.25) && (cid[3][1] >= 0.25))
+            {
+              changeVal -= 0.25;
+              cid[3][1] -= 0.25;
+              change[3][1] += 0.25;
+            } 
+          else if((changeVal >= 0.10) && (cid[2][1] >= 0.10))
+            {
+              changeVal -= 0.10;
+              cid[2][1] -= 0.10;
+              change[2][1] += 0.10;
+            } 
+          else if((changeVal >= 0.05) && (cid[1][1] >= 0.05))
+            {
+              changeVal -= 0.05;
+              cid[1][1] -= 0.05;
+              change[1][1] += 0.05;
+            } 
+          else if((changeVal >= 0.01) && (cid[0][1] >= 0.01))
+            {
+              changeVal -= 0.01;
+              cid[0][1] -= 0.01;
+              change[0][1] += 0.01;
+            } 
+      
+      changeVal = changeVal.toFixed(2);
+      
+      
+        }
+    }
+  
+  
+  function isNotZero(value) 
+  {
+    return value[1] > 0.00;
   }
-  console.log("Total Cash is: " + totalCash + " pennies");
-    
-  //if changeOwed > totalCash
-  if(changeOwed > totalCash) {
-    //return the string "Insufficient Funds"
-    return "Insufficient Funds";
-   //else if changeOwed === totalCash
-  }else if(changeOwed === totalCash) {
-    //return the string "Closed"
-    return "Closed";
-  }else {
-     //else return an array of change denominations from highest to lowest
-      //RECURSIVE FUNCTION NEEDED HERE TO DO SOMETHING THAT IF BOTH CASES ABOVE ARE FALSE THEN CONTINUES TO RUN???
-     return cid;
-  }//end if/else  
-
   
-  }//end checkCashRegister
-
-// Example cash-in-drawer array:
-// [["PENNY", 1.01],
-// ["NICKEL", 2.05],
-// ["DIME", 3.10],
-// ["QUARTER", 4.25],
-// ["ONE", 90.00],
-// ["FIVE", 55.00],
-// ["TEN", 20.00],
-// ["TWENTY", 60.00],
-// ["ONE HUNDRED", 100.00]]
-
-checkCashRegister(19.50, 20.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]);
+  change = change.filter(isNotZero);
+  
+  return change.reverse();
+}  
+ 
