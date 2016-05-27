@@ -10,89 +10,80 @@ Here are some helpful links:
 Global Object
 **********************************************************/
 
-function drawer(price, cash, cid) {
-var change = [['PENNY', 0.00], ['NICKEL', 0.00], ['DIME', 0.00], ['QUARTER', 0.00], ['ONE', 0.00], ['FIVE', 0.00], ['TEN', 0.00], ['TWENTY', 0.00], ['ONE HUNDRED', 0.00]];
-  
-  var changeVal = cash - price;
-        console.log(changeVal);
-  var cidVal = 0;
-  for(var i = 0; i < cid.length; i++)
-    {      
-      cidVal += cid[i][1];      
+
+function checkCashRegister(price, cash, cid) {
+    cash = cash * 100;
+    price = price * 100;
+ 
+    var change = cash - price,
+        changeLeft = change;
+ 
+    var totalCid = getTotalCid(cid);
+    var result =[];
+ 
+    if (change > totalCid) {
+        return 'Insufficient Funds';
+    } else if (change === totalCid) {
+        return 'Closed';
     }
-  
-  if(cidVal < changeVal) { return "Insufficient Funds"; } else if(cidVal === changeVal) { return "Closed"; } else { while(changeVal > 0.00)
-        {  
-         
-          if((changeVal >= 100.00) && (cid[8][1] >= 100.00))
-            {
-              changeVal -= 100.00;
-              cid[8][1] -= 100.00;
-              change[8][1] += 100.00;
-            }
-          else if((changeVal >= 20.00) && (cid[7][1] >= 20.00))
-            {
-              changeVal -= 20.00;
-              cid[7][1] -= 20.00;
-              change[7][1] += 20.00;
-            } 
-          else if((changeVal >= 10.00) && (cid[6][1] >= 10.00))
-            {
-              changeVal -= 10.00;
-              cid[6][1] -= 10.00;
-              change[6][1] += 10.00;
-            } 
-          else if((changeVal >= 5.00) && (cid[5][1] >= 5.00))
-            {
-              changeVal -= 5.00;
-              cid[5][1] -= 5.00;
-              change[5][1] += 5.00;
-            } 
-          else if((changeVal >= 1.00) && (cid[4][1] >= 1.00))
-            {
-              changeVal -= 1.00;
-              cid[4][1] -= 1.00;
-              change[4][1] += 1.00;
-            }
-          else if((changeVal >= 0.25) && (cid[3][1] >= 0.25))
-            {
-              changeVal -= 0.25;
-              cid[3][1] -= 0.25;
-              change[3][1] += 0.25;
-            } 
-          else if((changeVal >= 0.10) && (cid[2][1] >= 0.10))
-            {
-              changeVal -= 0.10;
-              cid[2][1] -= 0.10;
-              change[2][1] += 0.10;
-            } 
-          else if((changeVal >= 0.05) && (cid[1][1] >= 0.05))
-            {
-              changeVal -= 0.05;
-              cid[1][1] -= 0.05;
-              change[1][1] += 0.05;
-            } 
-          else if((changeVal >= 0.01) && (cid[0][1] >= 0.01))
-            {
-              changeVal -= 0.01;
-              cid[0][1] -= 0.01;
-              change[0][1] += 0.01;
-            } 
-      
-      changeVal = changeVal.toFixed(2);
-      
-      
+ 
+    for (var i = cid.length - 1; i >= 0; i--) {
+        var coinName = cid[i][0],
+            coinTotal = cid[i][1] * 100,
+            coinValue = getValue(coinName),
+            coinAmount = coinTotal / coinValue,
+            toReturn = 0;
+ 
+        while (changeLeft >= coinValue && coinAmount > 0) {
+            changeLeft -= coinValue;            
+            coinAmount--;
+            toReturn++;
+            console.log(changeLeft);
+        }
+ 
+        
+        if (toReturn > 0) {
+            result.push([coinName, toReturn * (coinValue / 100)]);
         }
     }
-  
-  
-  function isNotZero(value) 
-  {
-    return value[1] > 0.00;
-  }
-  
-  change = change.filter(isNotZero);
-  
-  return change.reverse();
-}  
  
+    // We make use of the getTotalCid method that we created earlier to see how much money we are actually returning.
+    // If it's not equal to the original change, it means that we can't return that exact amount with the current cash-in-register.
+    if (getTotalCid(result) != change) {
+        return 'Insufficient Funds';            // Return early.
+    }
+ 
+    return result;  // Everything went OK, we return the result!
+ 
+ 
+    function getTotalCid(cid) {
+        var total = 0;
+        for (var i = 0; i < cid.length; i++) {
+            total += cid[i][1] * 100;
+        }
+        return total;
+    }
+ 
+    function getValue(coinOrBill) {
+        switch (coinOrBill) {
+            case 'PENNY':
+                return 1;
+            case 'NICKEL':
+                return 5;
+            case 'DIME':
+                return 10;
+            case 'QUARTER':
+                return 25;
+            case 'ONE':
+                return 100;
+            case 'FIVE':
+                return 500;
+            case 'TEN':
+                return 1000;
+            case 'TWENTY':
+                return 2000;
+            case 'ONE HUNDRED':
+                return 10000;
+        }
+    }
+}
